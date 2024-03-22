@@ -4,9 +4,8 @@ const chalk = require('chalk');
 const { getQA } = require('./readFile');
 
 const packageNew = [
-  { name: 'Ястребы', value: 0 },
-  { name: 'Выдры', value: 1 },
-  { name: 'Еноты', value: 2 },
+  { name: 'Сложный квиз', value: 0 },
+  { name: 'ChatGpt квиз', value: 1 },
 ];
 const directory = './topics';
 inquirer
