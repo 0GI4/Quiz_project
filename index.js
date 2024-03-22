@@ -26,5 +26,6 @@ inquirer.prompt([
 
     console.log('Ваш ответ:', userAnswer.userAnswer);
     console.log('Правильный ответ:', correctAnswer);
+    console.log('Результат:', userAnswer.userAnswer === correctAnswer ? chalk.green('👍') : chalk.red('👎'));
   }
 });
