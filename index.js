@@ -9,10 +9,15 @@ const packageNew = [
   { name: 'Еноты', value: 2 },
 ];
 const directory = './topics';
-
 inquirer
   .prompt([
-    { type: 'input', name: 'username', message: 'Введите имя:' },
+    { type: 'input', name: 'username', message: 'Введите имя:', validate(ans){
+      if(ans === '') {
+        return 'Вы не представились!';
+      }
+      else 
+      return true;
+    }},
     {
       type: 'list',
       name: 'value',
@@ -22,7 +27,7 @@ inquirer
   ])
   .then(async (answer) => {
     const qa = await getQA(directory, answer.value);
-
+    let count = 0;
     for (let i = 0; i < qa.length; i++) {
       const question = qa[i][0];
       const correctAnswer = qa[i][1];
@@ -32,9 +37,29 @@ inquirer
         name: 'userAnswer',
         message: question,
       });
-
-      console.log(chalk.blue('Ваш ответ:', userAnswer.userAnswer));
-      console.log(chalk.red('Правильный ответ:', correctAnswer));
+      if (
+        userAnswer.userAnswer.trim().toLowerCase() ===
+        correctAnswer.trim().toLowerCase()
+      ) {
+        count++;
+      }
+      console.log(
+        chalk.blue(
+          'Ваш ответ:',
+          userAnswer.userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
+            ? chalk.green(userAnswer.userAnswer.trim())
+            : chalk.red(userAnswer.userAnswer.trim())
+        )
+      );
+      process.stdout.write(
+        userAnswer.userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
+          ? chalk.green(' 👍\n')
+          : chalk.red(' 👎\n')
+      );
     }
-    console.log('\nВсе Правильно!');
+    console.log(
+      chalk.bgMagentaBright(
+        chalk.bold(`\n ВАШ РЕЗУЛЬТАТ: ${count}/${qa.length} `)
+      )
+    );
   });
