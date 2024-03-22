@@ -21,9 +21,9 @@ inquirer.prompt([
   for (let i = 0; i < qa.length; i++) {
     const question = qa[i][0];
     const correctAnswer = qa[i][1];
-    
+
     const userAnswer = await inquirer.prompt({ type: 'input', name: 'userAnswer', message: question });
-    
+
     console.log('Ваш ответ:', userAnswer.userAnswer);
     console.log('Правильный ответ:', correctAnswer);
   }
