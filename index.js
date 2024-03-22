@@ -33,8 +33,8 @@ inquirer
         message: question,
       });
       console.log(chalk.blue('Ваш ответ:', userAnswer.userAnswer));
-      console.log(chalk.red('Правильный ответ:', correctAnswer));
-      console.log('Результат:', userAnswer.userAnswer === correctAnswer ? chalk.green('👍') : chalk.red('👎'));
+      process.stdout.write(chalk.red('Правильный ответ:', correctAnswer));
+      process.stdout.write(userAnswer.userAnswer === correctAnswer ? chalk.green(' 👍\n') : chalk.red(' 👎\n'));
     }
     console.log('\nВсе Правильно!');
   });
