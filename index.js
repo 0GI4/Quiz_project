@@ -2,6 +2,7 @@ const fs = require('fs').promises;
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const { getQA } = require('./readFile');
+const player = require('play-sound')();
 
 const packageNew = [
   { name: 'Сложный квиз', value: 0 },
@@ -10,13 +11,17 @@ const packageNew = [
 const directory = './topics';
 inquirer
   .prompt([
-    { type: 'input', name: 'username', message: 'Введите имя:', validate(ans){
-      if(ans === '') {
-        return 'Вы не представились!';
-      }
-      else 
-      return true;
-    }},
+    {
+      type: 'input',
+      name: 'username',
+      message: 'Введите имя:',
+      validate(ans) {
+        if (ans === '') {
+          return 'Вы не представились!';
+        }
+        return true;
+      },
+    },
     {
       type: 'list',
       name: 'value',
@@ -37,8 +42,8 @@ inquirer
         message: question,
       });
       if (
-        userAnswer.userAnswer.trim().toLowerCase() ===
-        correctAnswer.trim().toLowerCase()
+        userAnswer.userAnswer.trim().toLowerCase()
+        === correctAnswer.trim().toLowerCase()
       ) {
         count++;
       }
@@ -47,18 +52,23 @@ inquirer
           'Ваш ответ:',
           userAnswer.userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
             ? chalk.green(userAnswer.userAnswer.trim())
-            : chalk.red(userAnswer.userAnswer.trim())
-        )
+            : chalk.red(userAnswer.userAnswer.trim()),
+        ),
       );
       process.stdout.write(
         userAnswer.userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()
           ? chalk.green(' 👍\n')
-          : chalk.red(' 👎\n')
+          : chalk.red(' 👎\n'),
       );
+      player.play('./sounds/next.wav');
     }
     console.log(
       chalk.bgMagentaBright(
-        chalk.bold(`\n ВАШ РЕЗУЛЬТАТ: ${count}/${qa.length} `)
-      )
+        chalk.bold(`\n ВАШ РЕЗУЛЬТАТ: ${count}/${qa.length} `),
+
+      ),
     );
+    if (count === qa.length) {
+      player.play('./sounds/end.wav');
+    }
   });
