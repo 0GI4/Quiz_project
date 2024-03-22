@@ -32,9 +32,9 @@ inquirer
         name: 'userAnswer',
         message: question,
       });
-
       console.log(chalk.blue('Ваш ответ:', userAnswer.userAnswer));
       console.log(chalk.red('Правильный ответ:', correctAnswer));
+      console.log('Результат:', userAnswer.userAnswer === correctAnswer ? chalk.green('👍') : chalk.red('👎'));
     }
     console.log('\nВсе Правильно!');
   });
